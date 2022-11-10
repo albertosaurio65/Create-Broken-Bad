@@ -1,6 +1,7 @@
 package com.jetpacker06.CreateBrokenBad.register;
 
 import com.jetpacker06.CreateBrokenBad.CreateBrokenBad;
+import com.jetpacker06.CreateBrokenBad.fluid.AllFluids;
 import com.jetpacker06.CreateBrokenBad.item.*;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
@@ -47,7 +48,7 @@ public class AllItems {
     OXYGEN_BUCKET = bucket("oxygen_bucket", AllFluids.OXYGEN),
     AMMONIA_BUCKET = bucket("ammonia_bucket", AllFluids.AMMONIA),
     PHENYLACETIC_ACID_BUCKET = bucket("phenylacetic_acid_bucket", AllFluids.PHENYLACETIC_ACID),
-    ACETIC_ANHYRIDE_BUCKET = bucket("acetic_anhydride_bucket", AllFluids.ACETIC_ANHYDRIDE),
+    ACETIC_ANHYDRIDE_BUCKET = bucket("acetic_anhydride_bucket", AllFluids.ACETIC_ANHYDRIDE),
     PHENYLACETONE_BUCKET = bucket("phenylacetone_bucket", AllFluids.PHENYLACETONE);
 
     //end items
@@ -55,7 +56,7 @@ public class AllItems {
         return ingredient(name, new Item.Properties().tab(ItemGroup.CREATEBB));
     }
     public static RegistryObject<Item> bucket(String name, RegistryObject<FlowingFluid> fluid) {
-        return ITEMS.register(name, () -> new BucketItem(fluid, new Item.Properties().tab(ItemGroup.CREATEBB).craftRemainder(Items.BUCKET)));
+        return ITEMS.register(name, () -> new BucketItem(fluid, new Item.Properties().tab(ItemGroup.CREATEBB).craftRemainder(Items.BUCKET).stacksTo(1)));
     }
     public static RegistryObject<Item> ingredient(String name, Item.Properties pProperties) {
         return ITEMS.register(name, () -> new Item(pProperties));
