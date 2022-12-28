@@ -6,6 +6,8 @@ import com.jetpacker06.CreateBrokenBad.register.*;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.level.block.ComposterBlock;
+import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
@@ -22,7 +24,6 @@ public class CreateBrokenBad {
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
         AllBlocks.register(eventBus);
         AllItems.register(eventBus);
-        //OldFluids.register(eventBus);
         FluidTypes.register(eventBus);
         AllFluids.register(eventBus);
         AllBlockEntities.register(eventBus);
@@ -35,42 +36,42 @@ public class CreateBrokenBad {
         ItemBlockRenderTypes.setRenderLayer(AllBlocks.EPHEDRA_CROP_BLOCK.get(), RenderType.cutout());
         ItemBlockRenderTypes.setRenderLayer(AllFluids.LIQUID_BLUE_METHAMPHETAMINE.get(), RenderType.translucent());
         ItemBlockRenderTypes.setRenderLayer(AllFluids.LIQUID_BLUE_METHAMPHETAMINE_FLOWING.get(), RenderType.translucent());
-        /*
+        
         FlowingFluid[] allFluids = {
-                OldFluids.LIQUID_METHAMPHETAMINE.get(),
-                OldFluids.LIQUID_BLUE_METHAMPHETAMINE.get(),
-                OldFluids.METHYLAMINE.get(),
-                OldFluids.METHANOL.get(),
-                OldFluids.HYDROGEN.get(),
-                OldFluids.OXYGEN.get(),
-                OldFluids.AMMONIA.get(),
-                OldFluids.PHENYLACETIC_ACID.get(),
-                OldFluids.ACETIC_ANHYDRIDE.get(),
-                OldFluids.PHENYLACETONE.get()
+                AllFluids.LIQUID_METHAMPHETAMINE.get(),
+                AllFluids.LIQUID_BLUE_METHAMPHETAMINE.get(),
+                AllFluids.METHYLAMINE.get(),
+                AllFluids.METHANOL.get(),
+                AllFluids.HYDROGEN.get(),
+                AllFluids.OXYGEN.get(),
+                AllFluids.AMMONIA.get(),
+                AllFluids.PHENYLACETIC_ACID.get(),
+                AllFluids.ACETIC_ANHYDRIDE.get(),
+                AllFluids.PHENYLACETONE.get()
         };
         FlowingFluid[] allFlowingFluids = {
-                OldFluids.METHAMPHETAMINE_FLOWING.get(),
-                OldFluids.BLUE_METHAMPHETAMINE_FLOWING.get(),
-                OldFluids.METHYLAMINE_FLOWING.get(),
-                OldFluids.METHANOL_FLOWING.get(),
-                OldFluids.HYDROGEN_FLOWING.get(),
-                OldFluids.OXYGEN_FLOWING.get(),
-                OldFluids.AMMONIA_FLOWING.get(),
-                OldFluids.PHENYLACETIC_ACID_FLOWING.get(),
-                OldFluids.ACETIC_ANHYDRIDE_FLOWING.get(),
-                OldFluids.PHENYLACETONE_FLOWING.get()
+                AllFluids.LIQUID_METHAMPHETAMINE_FLOWING.get(),
+                AllFluids.LIQUID_BLUE_METHAMPHETAMINE_FLOWING.get(),
+                AllFluids.METHYLAMINE_FLOWING.get(),
+                AllFluids.METHANOL_FLOWING.get(),
+                AllFluids.HYDROGEN_FLOWING.get(),
+                AllFluids.OXYGEN_FLOWING.get(),
+                AllFluids.AMMONIA_FLOWING.get(),
+                AllFluids.PHENYLACETIC_ACID_FLOWING.get(),
+                AllFluids.ACETIC_ANHYDRIDE_FLOWING.get(),
+                AllFluids.PHENYLACETONE_FLOWING.get()
         };
         LiquidBlock[] allLiquidBlocks = {
-                OldFluids.METHAMPHETAMINE_LIQUID_BLOCK.get(),
-                OldFluids.BLUE_METHAMPHETAMINE_LIQUID_BLOCK.get(),
-                OldFluids.METHYLAMINE_LIQUID_BLOCK.get(),
-                OldFluids.METHANOL_LIQUID_BLOCK.get(),
-                OldFluids.HYDROGEN_LIQUID_BLOCK.get(),
-                OldFluids.OXYGEN_LIQUID_BLOCK.get(),
-                OldFluids.AMMONIA_LIQUID_BLOCK.get(),
-                OldFluids.PHENYLACETIC_ACID_LIQUID_BLOCK.get(),
-                OldFluids.ACETIC_ANHYDRIDE_LIQUID_BLOCK.get(),
-                OldFluids.PHENYLACETONE_LIQUID_BLOCK.get()
+                AllFluids.LIQUID_METHAMPHETAMINE_BLOCK.get(),
+                AllFluids.LIQUID_BLUE_METHAMPHETAMINE_BLOCK.get(),
+                AllFluids.METHYLAMINE_BLOCK.get(),
+                AllFluids.METHANOL_BLOCK.get(),
+                AllFluids.HYDROGEN_BLOCK.get(),
+                AllFluids.OXYGEN_BLOCK.get(),
+                AllFluids.AMMONIA_BLOCK.get(),
+                AllFluids.PHENYLACETIC_ACID_BLOCK.get(),
+                AllFluids.ACETIC_ANHYDRIDE_BLOCK.get(),
+                AllFluids.PHENYLACETONE_BLOCK.get()
         };
         for (int i = 0;i < allFluids.length;i++) {
             ItemBlockRenderTypes.setRenderLayer(allFluids[i], RenderType.translucent());
@@ -80,7 +81,7 @@ public class CreateBrokenBad {
         ItemBlockRenderTypes.setRenderLayer(AllBlocks.BRASS_CALL_BELL.get(), RenderType.cutout());
         //ItemBlockRenderTypes.setRenderLayer(AllBlocks.BLUE_METH_TRAY.get(), RenderType.cutout());
 
-         */
+         
     }
     private void commonSetup(final FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
