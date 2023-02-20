@@ -36,6 +36,7 @@ public class FluidTypes {
         FLUID_TYPES.register(eventBus);
     }
     private static RegistryObject<FluidType> registerFluidType(String name, boolean blue) {
-        return FLUID_TYPES.register(name, () -> new BaseFluidType(WATER_STILL_RL, WATER_FLOWING_RL, CHEMICAL_OVERLAY_RL, (blue ? 0xA100fffb : 0xA1FFFFFF), (blue ? vec_blue : vec_white), FluidTypes.FLUID_TYPE_PROPERTIES));
+        return FLUID_TYPES.register(name, () -> new BaseFluidType(WATER_STILL_RL, WATER_FLOWING_RL, CHEMICAL_OVERLAY_RL,
+                (blue ? 0xA100fffb : 0xA1FFFFFF), (blue ? vec_blue : vec_white), FluidTypes.FLUID_TYPE_PROPERTIES));
     }
 }

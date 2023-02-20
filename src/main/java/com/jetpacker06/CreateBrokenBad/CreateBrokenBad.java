@@ -22,10 +22,10 @@ public class CreateBrokenBad {
     public static final String MOD_ID = "createbb";
     public CreateBrokenBad() {
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
-        AllBlocks.register(eventBus);
         AllItems.register(eventBus);
-        FluidTypes.register(eventBus);
+        AllBlocks.register(eventBus);
         AllFluids.register(eventBus);
+        FluidTypes.register(eventBus);
         AllBlockEntities.register(eventBus);
         AllSoundEvents.register(eventBus);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
