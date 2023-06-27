@@ -1,13 +1,17 @@
 package com.jetpacker06.CreateBrokenBad;
 
-import com.jetpacker06.CreateBrokenBad.fluid.AllFluids;
-import com.jetpacker06.CreateBrokenBad.fluid.FluidTypes;
-import com.jetpacker06.CreateBrokenBad.register.*;
+import com.jetpacker06.CreateBrokenBad.register.AllCustomTriggerAdvancements;
+import com.jetpacker06.CreateBrokenBad.register.AllSoundEvents;
+import com.jetpacker06.CreateBrokenBad.registrate.RBlockEntities;
+import com.jetpacker06.CreateBrokenBad.registrate.RBlocks;
+import com.jetpacker06.CreateBrokenBad.registrate.RFluids;
+import com.jetpacker06.CreateBrokenBad.registrate.RItems;
+import com.simibubi.create.foundation.data.CreateRegistrate;
+import com.tterrag.registrate.Registrate;
+import com.tterrag.registrate.util.nullness.NonNullSupplier;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.level.block.ComposterBlock;
-import net.minecraft.world.level.block.LiquidBlock;
-import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
@@ -20,73 +24,37 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 @SuppressWarnings("removal")
 public class CreateBrokenBad {
     public static final String MOD_ID = "createbb";
+    private static final NonNullSupplier<CreateRegistrate> createRegistrate = () -> CreateRegistrate.create(MOD_ID);
+    public static CreateRegistrate registrate() {
+        return createRegistrate.get();
+    }
+
     public CreateBrokenBad() {
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
-        AllItems.register(eventBus);
-        AllBlocks.register(eventBus);
-        AllFluids.register(eventBus);
-        FluidTypes.register(eventBus);
-        AllBlockEntities.register(eventBus);
         AllSoundEvents.register(eventBus);
+
+
+        Registrate registrate = Registrate.create(MOD_ID);
+        RItems.registerItems(registrate);
+        RBlocks.registerBasicBlocks(registrate);
+        RFluids.registerFluids(registrate);
+        RBlockEntities.registerBlockEntities(registrate);
+
+
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::commonSetup);
         MinecraftForge.EVENT_BUS.register(this);
     }
     private void clientSetup(final FMLClientSetupEvent event) {
-        ItemBlockRenderTypes.setRenderLayer(AllBlocks.EPHEDRA_CROP_BLOCK.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(AllFluids.LIQUID_BLUE_METHAMPHETAMINE.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(AllFluids.LIQUID_BLUE_METHAMPHETAMINE_FLOWING.get(), RenderType.translucent());
-        
-        FlowingFluid[] allFluids = {
-                AllFluids.LIQUID_METHAMPHETAMINE.get(),
-                AllFluids.LIQUID_BLUE_METHAMPHETAMINE.get(),
-                AllFluids.METHYLAMINE.get(),
-                AllFluids.METHANOL.get(),
-                AllFluids.HYDROGEN.get(),
-                AllFluids.OXYGEN.get(),
-                AllFluids.AMMONIA.get(),
-                AllFluids.PHENYLACETIC_ACID.get(),
-                AllFluids.ACETIC_ANHYDRIDE.get(),
-                AllFluids.PHENYLACETONE.get()
-        };
-        FlowingFluid[] allFlowingFluids = {
-                AllFluids.LIQUID_METHAMPHETAMINE_FLOWING.get(),
-                AllFluids.LIQUID_BLUE_METHAMPHETAMINE_FLOWING.get(),
-                AllFluids.METHYLAMINE_FLOWING.get(),
-                AllFluids.METHANOL_FLOWING.get(),
-                AllFluids.HYDROGEN_FLOWING.get(),
-                AllFluids.OXYGEN_FLOWING.get(),
-                AllFluids.AMMONIA_FLOWING.get(),
-                AllFluids.PHENYLACETIC_ACID_FLOWING.get(),
-                AllFluids.ACETIC_ANHYDRIDE_FLOWING.get(),
-                AllFluids.PHENYLACETONE_FLOWING.get()
-        };
-        LiquidBlock[] allLiquidBlocks = {
-                AllFluids.LIQUID_METHAMPHETAMINE_BLOCK.get(),
-                AllFluids.LIQUID_BLUE_METHAMPHETAMINE_BLOCK.get(),
-                AllFluids.METHYLAMINE_BLOCK.get(),
-                AllFluids.METHANOL_BLOCK.get(),
-                AllFluids.HYDROGEN_BLOCK.get(),
-                AllFluids.OXYGEN_BLOCK.get(),
-                AllFluids.AMMONIA_BLOCK.get(),
-                AllFluids.PHENYLACETIC_ACID_BLOCK.get(),
-                AllFluids.ACETIC_ANHYDRIDE_BLOCK.get(),
-                AllFluids.PHENYLACETONE_BLOCK.get()
-        };
-        for (int i = 0;i < allFluids.length;i++) {
-            ItemBlockRenderTypes.setRenderLayer(allFluids[i], RenderType.translucent());
-            ItemBlockRenderTypes.setRenderLayer(allFlowingFluids[i], RenderType.translucent());
-            ItemBlockRenderTypes.setRenderLayer(allLiquidBlocks[i], RenderType.translucent());
-        }
-        ItemBlockRenderTypes.setRenderLayer(AllBlocks.BRASS_CALL_BELL.get(), RenderType.cutout());
-        //ItemBlockRenderTypes.setRenderLayer(AllBlocks.BLUE_METH_TRAY.get(), RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(RBlocks.EPHEDRA_CROP_BLOCK.get(), RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(RBlocks.BRASS_CALL_BELL.get(), RenderType.cutout());
 
          
     }
     private void commonSetup(final FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
-            ComposterBlock.COMPOSTABLES.put(AllItems.EPHEDRA.get(), 0.3f);
-            ComposterBlock.COMPOSTABLES.put(AllItems.EPHEDRA_SEEDS.get(), 0.65f);
+            ComposterBlock.COMPOSTABLES.put(RItems.EPHEDRA.get(), 0.3f);
+            ComposterBlock.COMPOSTABLES.put(RItems.EPHEDRA_SEEDS.get(), 0.65f);
         });
         
         AllCustomTriggerAdvancements.register();

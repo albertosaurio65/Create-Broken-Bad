@@ -1,10 +1,10 @@
 package com.jetpacker06.CreateBrokenBad.block;
 
-import com.jetpacker06.CreateBrokenBad.block.blockentity.BrassCallBellBlockEntity;
-import com.jetpacker06.CreateBrokenBad.register.AllBlockEntities;
 import com.jetpacker06.CreateBrokenBad.register.AllCustomTriggerAdvancements;
 import com.jetpacker06.CreateBrokenBad.register.AllSoundEvents;
+import com.jetpacker06.CreateBrokenBad.registrate.RBlockEntities;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -27,39 +27,33 @@ import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.stream.Stream;
 
 public class BrassCallBellBlock extends BaseEntityBlock {
-    public BrassCallBellBlock(Properties p_49795_) {
-        super(p_49795_);
+    public BrassCallBellBlock(Properties pProperties) {
+        super(pProperties);
     }
+
     public static BooleanProperty DOWN = BooleanProperty.create("down");
 
     @Override
-    public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
-        if (pState.getValue(DOWN)) {
-            return downShape;
-        } else {
-            return upShape;
-        }
+    @SuppressWarnings("deprecation")
+    public @NotNull VoxelShape getShape(@NotNull BlockState pState, @NotNull BlockGetter pLevel, @NotNull BlockPos pPos, @NotNull CollisionContext pContext) {
+        return shape;
     }
 
-    private static final VoxelShape upShape = Stream.of(
-            Block.box(7.5, 2.25, 7.5, 8.5, 4, 8.5),
-            Block.box(7, 1, 7, 9, 3, 9),
-            Block.box(6, 0, 6, 10, 1, 10)
+    private static final VoxelShape shape = Stream.of(
+            Block.box(6, 1, 6, 10, 3, 10),
+            Block.box(5, 0, 5, 11, 1, 11),
+            Block.box(7, 3, 7, 9, 4, 9)
     ).reduce((v1, v2) -> Shapes.join(v1, v2, BooleanOp.OR)).get();
 
-    private static final VoxelShape downShape = Stream.of(
-            Block.box(7.5, 2.25, 7.5, 8.5, 3.25, 8.5),
-            Block.box(7, 1, 7, 9, 3, 9),
-            Block.box(6, 0, 6, 10, 1, 10)
-    ).reduce((v1, v2) -> Shapes.join(v1, v2, BooleanOp.OR)).get();
     @Nullable
     @Override
-    public BlockState getStateForPlacement(BlockPlaceContext pContext) {
+    public BlockState getStateForPlacement(@NotNull BlockPlaceContext pContext) {
         return this.defaultBlockState().setValue(DOWN, false);
     }
 
@@ -68,7 +62,8 @@ public class BrassCallBellBlock extends BaseEntityBlock {
     }
 
     @Override
-    public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
+    @SuppressWarnings("deprecation")
+    public @NotNull InteractionResult use(@NotNull BlockState pState, @NotNull Level pLevel, @NotNull BlockPos pPos, @NotNull Player pPlayer, @NotNull InteractionHand pHand, @NotNull BlockHitResult pHit) {
         if (pPlayer instanceof ServerPlayer) {
             AllCustomTriggerAdvancements.DING.trigger((ServerPlayer) pPlayer);
         }
@@ -77,26 +72,40 @@ public class BrassCallBellBlock extends BaseEntityBlock {
         pLevel.playSound(pPlayer,pPos, AllSoundEvents.BRASS_CALL_BELL_DING.get(), SoundSource.BLOCKS, 2f, 1f);
         return InteractionResult.sidedSuccess(pLevel.isClientSide);
     }
+
     @Override
-    public RenderShape getRenderShape(BlockState pState) {
+    public @NotNull RenderShape getRenderShape(@NotNull BlockState pState) {
         return RenderShape.MODEL;
     }
 
     @Nullable
     @Override
-    public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
-        return new BrassCallBellBlockEntity(pPos, pState);
+    public BlockEntity newBlockEntity(@NotNull BlockPos pPos, @NotNull BlockState pState) {
+        return new BrassCallBellBlockEntity(RBlockEntities.BRASS_CALL_BELL.get(), pPos, pState);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
-    public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pIsMoving) {
+    public void onRemove(@NotNull BlockState pState, Level pLevel, @NotNull BlockPos pPos, @NotNull BlockState pNewState, boolean pIsMoving) {
         pLevel.removeBlockEntity(pPos);
         super.onRemove(pState, pLevel, pPos, pNewState, pIsMoving);
     }
 
     @Nullable
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
-        return createTickerHelper(pBlockEntityType, AllBlockEntities.BRASS_CALL_BELL.get(), BrassCallBellBlockEntity::tick);
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level pLevel, @NotNull BlockState pState, @NotNull BlockEntityType<T> pBlockEntityType) {
+        return createTickerHelper(pBlockEntityType, RBlockEntities.BRASS_CALL_BELL.get(), BrassCallBellBlockEntity::tick);
+    }
+
+    public static class Trapped extends BrassCallBellBlock {
+        public Trapped(Properties pProperties) {
+            super(pProperties);
+        }
+
+        @SuppressWarnings("deprecation")
+        @Override
+        public int getSignal(@NotNull BlockState pBlockState, @NotNull BlockGetter pBlockAccess, @NotNull BlockPos pPos, @NotNull Direction pSide) {
+            return pBlockState.getValue(DOWN) ? 15 : 0;
+        }
     }
 }

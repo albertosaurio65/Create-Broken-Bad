@@ -1,7 +1,7 @@
 package com.jetpacker06.CreateBrokenBad.item;
 
 import com.jetpacker06.CreateBrokenBad.block.TrayBlock;
-import com.jetpacker06.CreateBrokenBad.register.AllBlocks;
+import com.jetpacker06.CreateBrokenBad.registrate.RBlocks;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -18,7 +18,7 @@ public class MethItem extends Item {
     @Override
     public InteractionResult useOn(UseOnContext pContext) {
         Block clickedBlock = pContext.getLevel().getBlockState(pContext.getClickedPos()).getBlock();
-        Block newBlock = ((pContext.getItemInHand().getItem() instanceof MethItem.Blue) ? AllBlocks.BLUE_METH_TRAY : AllBlocks.WHITE_METH_TRAY).get();
+        Block newBlock = ((pContext.getItemInHand().getItem() instanceof MethItem.Blue) ? RBlocks.BLUE_METH_TRAY : RBlocks.WHITE_METH_TRAY).get();
         if (clickedBlock instanceof TrayBlock.Empty) {
             Direction direction = pContext.getLevel().getBlockState(pContext.getClickedPos()).getValue(TrayBlock.FACING);
             pContext.getLevel().setBlock(

@@ -105,10 +105,17 @@
 			"children": [0, 1, 2]
 		},
 		{
-			"name": "base",
+			"name": "VoxelShapes",
 			"origin": [8, 8, 8],
 			"color": 0,
-			"children": [3, 4]
+			"children": [
+				{
+					"name": "base",
+					"origin": [8, 8, 8],
+					"color": 0,
+					"children": [3, 4]
+				}
+			]
 		}
 	]
 }
