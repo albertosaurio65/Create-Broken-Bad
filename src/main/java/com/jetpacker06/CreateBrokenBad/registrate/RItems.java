@@ -52,7 +52,7 @@ public class RItems {
         EPHEDRA_SEEDS = REGISTRATE.item("ephedra_seeds", Item::new)
                 //.lang("Ephedra Seeds")
                 .register();
-        WHITE_PHOSPHORUS = REGISTRATE.item("sudafed", Item::new)
+        WHITE_PHOSPHORUS = REGISTRATE.item("white_phosphorus", Item::new)
                 //.lang("Sudafed")
                 .register();
         RED_PHOSPHORUS = REGISTRATE.item("red_phosphorus", Item::new)
